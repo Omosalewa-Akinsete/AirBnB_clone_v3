@@ -2,6 +2,7 @@
 """Create a flask app that starts an API"""
 from os import getenv
 from flask import Flask
+from flask import jsonify
 from models import storage
 from api.v1.views import app_views
 # Create a Flask application instance
@@ -9,6 +10,20 @@ app = Flask(__name__)
 
 # Register the blueprint app_views to the Flask instance app
 app.register_blueprint(app_views)
+
+
+@app.teardown_appcontext
+def teardown_engine(exception):
+    """A route that returns teardown engine"""
+    storage.close()
+
+
+@app.errorhandler(404)
+def not_found(error):
+    """A route that returns not found"""
+    response = {"error": "Not found"}
+    return jsonify(response), 404
+
 
 # Run the Flask server
 if __name__ == "__main__":
