@@ -112,4 +112,6 @@ class DBStorage:
             all_objs = self.all()
             if all_objs:
                 occurence = len(all_objs)
-        return occurence
+            if not occurrence:
+                return 0
+            return occurence
