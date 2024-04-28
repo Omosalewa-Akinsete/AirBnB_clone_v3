@@ -96,7 +96,7 @@ class DBStorage:
         """count the number of objects in storage"""
         occurence = None
         if cls:
-            if cls in classes.values():
+            if cls in classes.keys() or cls in classes.values():
                 # user: the name of the class to be retrieved
                 all_objs = self.all(cls)
                 # check if all_objs has values
