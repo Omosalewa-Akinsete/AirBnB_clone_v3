@@ -14,7 +14,7 @@ from api.v1.views import app_views
 @app_views.route("/users", strict_slashes=False)
 def get_all_users():
     """A route that returns get all users"""
-    users = storage.all(User)
+    users = storage.all(User).values()
     return jsonify([user.to_dict() for user in users])
 
 
@@ -35,6 +35,7 @@ def delete_user(user_id):
     if user:
         storage.delete(user)
         storage.save()
+        return jsonify({}), 200
     else:
         return abort(404)
 
