@@ -3,13 +3,17 @@
 from os import getenv
 from flask import Flask
 from flask import jsonify
+from flask_cors import CORS
 from models import storage
 from api.v1.views import app_views
 # Create a Flask application instance
 app = Flask(__name__)
 
+CORS(app, resources={r"/api/v1/*": {"origins": "0.0.0.0"}})
+
 # Register the blueprint app_views to the Flask instance app
 app.register_blueprint(app_views)
+app.url_map.strict_slashes = False
 
 
 @app.teardown_appcontext
